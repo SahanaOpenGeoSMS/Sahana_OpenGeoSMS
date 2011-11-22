@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--com.geosms.view.GeoSMSListItemView RelativeLayout-->
+<com.sahana.geosmser.view.GeoSMSListItemView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content" android:padding="3dip">
+  <!-- android:layout_height="?android:attr/listPreferredItemHeight" android:padding="5dip"> -->
+
+	<ImageView android:layout_height="wrap_content" android:id="@+id/ImageViewFormatType"
+		android:layout_alignParentLeft="true" android:layout_width="wrap_content"></ImageView>
+	<RelativeLayout android:id="@+id/RelativeLayout01"
+		android:layout_toRightOf="@+id/ImageViewFormatType"
+		android:paddingLeft="6dip" android:layout_height="54dip"
+		android:layout_width="fill_parent">
+
+
+
+		<RelativeLayout android:id="@+id/RelativeLayout02"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"
+			android:gravity="center_vertical" android:layout_alignParentTop="true"
+			android:paddingTop="3dip">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/TextViewSMSListItemAddress"
+				android:textColor="#FFFFFF" android:textSize="17dip">
+			</TextView>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/TextViewSMSListItemDate"
+				android:textColor="#FFFFFF" android:layout_alignParentRight="true"
+				android:textSize="15dip">
+			</TextView>
+		</RelativeLayout>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/TextViewSMSListItemBody"
+			android:singleLine="true" android:textColor="#FFFFFF"
+			android:layout_alignParentBottom="true" android:paddingBottom="2dip"
+			android:textSize="18dip">
+		</TextView>
+		<TextView android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:id="@+id/TextViewSMSReplier"
+			android:textColor="#FFFFFF"
+			android:layout_alignParentRight="true"
+			android:layout_alignTop="@id/TextViewSMSListItemBody"
+			android:textSize="15dip"
+			></TextView>
+	</RelativeLayout>
+	
+
+
+</com.sahana.geosmser.view.GeoSMSListItemView>

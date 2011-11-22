@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sahana.geosmser.view.SMSDeliveryView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="4px" android:id="@+id/RelativeLayoutSMSMainPanel">
+	<com.sahana.geosmser.widget.AutoCompleteSMSTextView android:id="@+id/AutoEditTextSMSPhoneNumber" android:maxLines="1" android:singleLine="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/geosms_delivery_message_receiver_hint" />
+	
+	<RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_below="@+id/AutoEditTextSMSPhoneNumber" android:id="@+id/RelativeLayoutSMSMessage">
+		<TableLayout android:id="@+id/TableLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:shrinkColumns="0" android:stretchColumns="0">
+			<TableRow android:id="@+id/TableRow01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical">
+				<RelativeLayout android:id="@+id/RelativeLayout01" android:background="@android:drawable/edit_text" android:layout_height="wrap_content" android:layout_weight="1.0" android:addStatesFromChildren="true" android:layout_width="0dip">
+					<EditText android:maxLines="4" android:inputType="textMultiLine" android:id="@+id/EditTextSMSMessage" android:autoText="true" android:capitalize="sentences" android:background="@null" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/geosms_delivery_message_body_hint" android:minLines="2" android:gravity="top"></EditText>
+					<TextView
+                            android:id="@+id/TextViewSMSMessageCounter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#88000000"
+                            android:textColor="#ffffffff"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:paddingLeft="3dip"
+                            android:paddingRight="3dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true" android:visibility="gone"/>
+				</RelativeLayout>
+				<Button android:layout_width="wrap_content" android:text="@string/geosms_delivery_message_send_button" android:id="@+id/ButtonSMSSend" android:layout_height="fill_parent" android:layout_gravity="center_vertical"></Button>
+			</TableRow>
+			<TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone">
+			
+				<RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/relativeLayout1" android:layout_gravity="center_vertical">
+					<EditText android:layout_height="wrap_content" android:hint="ReverseCode" android:id="@+id/EditTextReverseCode" android:layout_alignParentLeft="true" android:layout_width="fill_parent" android:gravity="top" android:minLines="4"></EditText>
+				</RelativeLayout>
+				<LinearLayout android:id="@+id/linearLayout1" android:layout_width="wrap_content" android:layout_height="fill_parent" android:orientation="vertical">
+					<ToggleButton android:text="ToggleButton" android:layout_width="wrap_content" android:layout_height="0dip" android:layout_weight="1" android:id="@+id/ToggleButtonReverseCodeShow"></ToggleButton>
+					<Button android:layout_height="0dip" android:text="Bind" android:layout_weight="1" android:id="@+id/ButtonReverseCodeAppend" android:layout_width="fill_parent"></Button>
+				</LinearLayout>
+			</TableRow>
+		</TableLayout>
+	</RelativeLayout>
+
+</com.sahana.geosmser.view.SMSDeliveryView>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/homepage_sahana_background" android:id="@+id/linearLayoutSahanaHomepageLand">
+        <ImageView android:id="@+id/imgHomepageSahanaWord" android:layout_gravity="center" android:src="@drawable/homepage_sahana_word" android:layout_width="wrap_content" android:paddingBottom="20px" android:paddingLeft="10px" android:layout_height="fill_parent"></ImageView>
+        <ImageView android:src="@drawable/homepage_sahana_icon" android:layout_weight="1" android:layout_width="wrap_content" android:id="@+id/imgHomepageSahanaIcon" android:layout_height="wrap_content" android:paddingBottom="30px" android:paddingRight="5px" android:layout_marginLeft="10px" android:layout_gravity="center"></ImageView>
+    </LinearLayout>
+

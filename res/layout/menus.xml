@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" android:background="@drawable/menupage_background" android:orientation="vertical">
+    <LinearLayout android:layout_height="0dp" android:layout_weight="1" android:layout_width="fill_parent" android:id="@+id/layoutWhereAreWe">
+        <ImageView android:src="@drawable/menupage_icon_where_are_we" android:layout_gravity="center_vertical" android:layout_height="wrap_content" android:id="@+id/imgWhereAreWe" android:layout_width="0dp" android:layout_weight="1"></ImageView>
+        <TextView android:layout_height="wrap_content" android:layout_width="0dp" android:layout_gravity="center_vertical" android:id="@+id/textWhereAreWe" android:layout_weight="1" android:text="@string/menu_page_meet_here_title" android:gravity="left"></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1" android:id="@+id/layoutWhereAmI">
+        <ImageView android:src="@drawable/menupage_icon_where_am_i" android:layout_height="wrap_content" android:id="@+id/imgWhereAmI" android:layout_gravity="center_vertical" android:layout_width="0dp" android:layout_weight="1"></ImageView>
+        <TextView android:layout_height="wrap_content" android:layout_gravity="center_vertical" android:layout_width="0dp" android:layout_weight="1" android:id="@+id/textWhereAmI" android:text="@string/menu_page_where_am_i_title" android:gravity="left"></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1" android:id="@+id/layoutWhereAreYou">
+        <ImageView android:src="@drawable/menupage_icon_where_are_you" android:layout_height="wrap_content" android:id="@+id/imgWhereAreYou" android:layout_gravity="center_vertical" android:layout_width="0dp" android:layout_weight="1"></ImageView>
+        <TextView android:layout_height="wrap_content" android:layout_gravity="center_vertical" android:layout_width="0dp" android:layout_weight="1" android:id="@+id/textWhereAreYou" android:text="@string/menu_page_where_are_you" android:gravity="left"></TextView>
+    </LinearLayout>
+</LinearLayout>

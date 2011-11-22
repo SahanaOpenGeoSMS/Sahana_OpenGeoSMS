@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Open GeoSMSer</string>
+    <!-- release API Key<string name="my_maps_apikey">0OBaSHxo23kno7wdqq457A9aMPqIiNlux1NH7PA</string> -->
+    <!--Ro debug API Key <string name="my_maps_apikey">0SzM4VIV3mOZ6w-VGNhzKBasNZqKTZuoY55H-5g</string>-->
+    
+    <!--Ye release API Key--><string name="my_maps_apikey">0VTyb20YRVif9JuFohf-hui8_k-su7J1lhrh54A</string>
+    <!--Ye debug API Key ><string name="my_maps_apikey">0VTyb20YRViffe2cgscxpsKCQBWjx75Kxn53xiA</string-->
+    
+    <string name="sms_empty">No Open GeoSMS messages in your inbox.</string>
+    
+    <!-- MainAct.Menu -->
+    <string name="menu_geosms_inbox">Open GeoSMS Inbox</string>
+    <string name="menu_my_location">My location</string>
+    <string name="menu_geosms_location">Open GeoSMS location</string>
+    <string name="menu_configure">Query</string>
+    <string name="menu_sendmylocation">Send MyLocation</string>
+    <string name="menu_exit">Exit</string>
+    
+    <!-- GeoSMSManagerAct.ContextMenu -->
+    <string name="context_menu_geosms_inbox_view">View</string>
+    <string name="context_menu_geosms_inbox_delete">Delete</string>
+    <string name="context_menu_geosms_inbox_open_link">Open Link</string>
+    <string name="context_menu_geosms_inbox_header_title">Option</string>
+    
+    <!-- Dialog -->
+    <string name="dialog_geosms_delivery_title">Send Open GeoSMS</string>
+    <string name="dialog_geosms_delivery_message_sending_title">Message sending</string>
+    <string name="dialog_geosms_delivery_message_sending_message">your message is sending...</string>
+    <string name="dialog_geosms_delivery_message_sent_title">Message sending</string>
+    <string name="dialog_geosms_delivery_message_sent_message"></string>
+    <string name="dialog_geosms_delivery_exit_conform_title">Exit</string>
+    <string name="dialog_geosms_delivery_exit_conform_message">exit and discard this message?</string>
+    <string name="dialog_geosms_inbox_delete_message_conform_title">Delete Open GeoSMS</string>
+    <string name="dialog_geosms_inbox_delete_message_conform_message">The Open GeoSMS will be deleted.</string>
+    
+    <string name="dialog_geosms_query_title">Send Open GeoSMS Query</string>
+    
+    <!-- Button -->
+    <string name="button_yes_text">Yes</string>
+    <string name="button_no_text">No</string>
+    <string name="button_sure_text">Sure</string>
+    
+    <!-- Message Sent Result -->
+    <string name="message_sent_result_ok">SMS sent</string>
+    <string name="message_sent_result_error_generic_failure">Error! Generic failure</string>
+    <string name="message_sent_result_error_no_service">Error! No available service</string>
+    <string name="message_sent_result_error_null_pdu">Error! Null SMS PDU</string>
+    <string name="message_sent_result_error_radio_off">Error! Broadcast radio off</string>
+    <string name="message_sent_result_error_unknown">Unknown Error!</string>
+    
+    <!-- Message Delivery Result -->
+    <string name="message_delivery_result_ok">SMS delivered</string>
+    <string name="message_delivery_result_cancel">SMS not delivered</string>
+    
+    <!-- GeoSMS Delivery -->
+    <string name="geosms_delivery_message_attachment_title">Attachment:</string>
+    
+    <!-- SMS Delivery View XML -->
+	<string name="geosms_delivery_message_receiver_hint">To:</string>
+	<string name="geosms_delivery_message_body_hint">Tap to compose</string>
+	<string name="geosms_delivery_message_send_button">Send</string>
+    
+    <!-- Message Send Handler -->
+    <string name="message_sent_handler_checking_timeout">Message timeout!</string>
+    
+    <!-- My Location -->
+	
+	<!-- Information View -->
+	<string name="foramt_pack_poi_name_key">Name</string>
+	<string name="foramt_pack_poi_phone_key">Phone</string>
+	<string name="foramt_pack_poi_address_key">Address</string>
+	<string name="foramt_pack_poi_description_key">Description</string>
+	<string name="foramt_pack_extended_msg_message_key">Message</string>
+	<string name="foramt_pack_extended_poif_name_key">Name</string>
+	<string name="foramt_pack_extended_poif_phone_key">Phone</string>
+	<string name="foramt_pack_extended_poif_message_key">Message</string>
+	<string name="foramt_pack_extended_unknown_formattype_key">FormatType</string>
+	<string name="foramt_pack_extended_unknown_content_key">Content</string>
+	<string name="foramt_pack_extended_unknown_type">Unknown</string>
+	<string name="foramt_pack_unknown_formattype_key">FormatType</string>
+	<string name="foramt_pack_unknown_content_key">Content</string>
+	
+	<!-- Loading Text --> 
+	<string name="loading_inbox_activity_list">Loading</string>
+	<string name="loading_inbox_list_item">loading...</string>
+	
+	<!-- Error -->
+	<string name="exception_unknown_error">Unknown Error</string>
+	
+	<!-- Toast -->
+	<string name="toast_non_forwarding_message">the point cannot be forwarded</string>
+	
+	<!-- Menus -->
+	<string name="menu_edit_whitelist">Edit WhiteList</string>
+	<string name="contact_editor_readme">Please click Edit button, and choose approved person from contact list. Remove contact by pressing list item.</string>
+	<string name="contact_editor_whitelist_title">White List</string>
+	<string name="contact_editor_edit_button">Edit</string>
+	<string name="contact_editor_home_button">Home</string>
+	<string name="menu_page_meet_here_title">Where To Meet?</string>
+	<string name="menu_page_where_am_i_title">Where I Am~</string>
+	<string name="menu_page_where_are_you">Where Are You?</string>
+	<string name="dialog_geosms_mylocation_delivery_title">Send Open GeoSMS with My Location</string>
+	<string name="dialog_geosms_inbox_forward_title">Forward Open GeoSMS</string>
+	<string name="dialog_geosms_inbox_reply_title">Send Open GeoSMS Reply</string>
+	<string name="context_menu_geosms_inbox_forward">Forward</string>
+	<string name="context_menu_geosms_inbox_reply">Reply</string>
+	<string name="gps_state_no_provider">No suitable provider now..., please turn on GPS provider or Network provider.</string>
+	<string name="toast_non_sending_geosms">Open GeoSMS not sending, Android GPS waiting for location..., try again later</string>
+	<string name="dialog_geosms_inbox_replied_message">This Open GeoSMS has replied</string>
+	<string name="geosms_delivery_reverse_geocode_body_hint">ReverseGeoCode</string>
+	<string name="geosms_delivery_bind_reverse_geocode_body_btn"></string>
+	<string name="menu_advance">Advance</string>
+	<string name="menu_setting">Setting</string>
+	
+	<!-- Sahana -->
+	<string name="app_name_sahana">SAHANA</string>
+	
+	<string name="menu_page_sahana_incident_report_title">Incident Report</string>
+	<string name="menu_page_sahana_task_dispatch_title">Task Dispatch</string>
+	<string name="menu_page_sahana_team_communication_title">Team Communication</string>
+	
+	<string name="menu_sahana_inbox_task_title">Task</string>
+	<string name="menu_sahana_inbox">Sahana Inbox</string>	
+	
+	<string name="menu_page_sahana_team_communication_label">Team Communication</string>
+	
+	<string name="dialog_sahana_incident_delivery_btn_send_text">Send</string>
+	<string name="dialog_sahana_incident_delivery_editText_hint_text">Short Description</string>
+	<string name="dialog_sahana_incident_delivery_title">Incident Report with My Location</string>
+</resources>

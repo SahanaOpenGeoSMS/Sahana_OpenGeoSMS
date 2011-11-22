@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Open GeoSMSer</string>
+    
+    <string name="sms_empty">您的信件匣中沒有Open GeoSMS訊息</string>
+    
+    <!-- MainAct.Menu -->
+    <string name="menu_geosms_inbox">Open GeoSMS 收件匣</string>
+    <string name="menu_my_location">我的位置</string>
+    <string name="menu_geosms_location">Open GeoSMS 位置</string>
+    <string name="menu_configure">查詢</string>
+    <string name="menu_sendmylocation">傳送我的位置</string>
+    <string name="menu_exit">離開</string>
+    
+    <!-- GeoSMSManagerAct.ContextMenu -->
+    <string name="context_menu_geosms_inbox_view">開啟</string>
+    <string name="context_menu_geosms_inbox_delete">刪除</string>
+    <string name="context_menu_geosms_inbox_open_link">開啟連結</string>
+    <string name="context_menu_geosms_inbox_header_title">選項</string>
+    
+    <!-- Dialog -->
+    <string name="dialog_geosms_delivery_title">傳送Open GeoSMS</string>
+    <string name="dialog_geosms_delivery_message_sending_title">訊息傳送</string>
+    <string name="dialog_geosms_delivery_message_sending_message">您的訊息正在送出...</string>
+    <string name="dialog_geosms_delivery_message_sent_title">訊息傳送</string>
+    <string name="dialog_geosms_delivery_message_sent_message"></string>
+    <string name="dialog_geosms_delivery_exit_conform_title">結束傳送</string>
+    <string name="dialog_geosms_delivery_exit_conform_message">是否取消編輯訊息?</string>
+    <string name="dialog_geosms_inbox_delete_message_conform_title">刪除Open GeoSMS</string>
+    <string name="dialog_geosms_inbox_delete_message_conform_message">刪除這筆 GeoSMS?</string>
+    
+    <!-- Button -->
+    <string name="button_yes_text">是</string>
+    <string name="button_no_text">否</string>
+    <string name="button_sure_text">確定</string>
+    
+    <!-- Message Sent Result -->
+    <string name="message_sent_result_ok">簡訊已傳送</string>
+    <string name="message_sent_result_error_generic_failure">錯誤! 一般故障</string>
+    <string name="message_sent_result_error_no_service">錯誤! 沒有可以的服務</string>
+    <string name="message_sent_result_error_null_pdu">錯誤! SMS PDU 遺缺</string>
+    <string name="message_sent_result_error_radio_off">錯誤! 無線電關閉</string>
+    <string name="message_sent_result_error_unknown">未知的錯誤!</string>
+    
+    <!-- Message Delivery Result -->
+    <string name="message_delivery_result_ok">簡訊已遞送給收件者</string>
+    <string name="message_delivery_result_cancel">簡訊未遞送給收件者</string>
+    
+    <!-- GeoSMS Delivery -->
+    <string name="geosms_delivery_message_attachment_title">附加資訊:</string>
+    
+    <!-- SMS Delivery View XML -->
+	<string name="geosms_delivery_message_receiver_hint">收件者:</string>
+	<string name="geosms_delivery_message_body_hint">點選以撰寫</string>
+	<string name="geosms_delivery_message_send_button">傳送</string>
+    
+    <!-- Message Send Handler -->
+    <string name="message_sent_handler_checking_timeout">訊息傳送迂期</string>
+    
+    <!-- My Location -->
+    <string name="mylocation_finding">正在嘗試尋找您的位置...</string>
+    
+    <!-- Information View -->
+	<string name="foramt_pack_poi_name_key">名稱</string>
+	<string name="foramt_pack_poi_phone_key">電話</string>
+	<string name="foramt_pack_poi_address_key">地址</string>
+	<string name="foramt_pack_poi_description_key">描述</string>
+	<string name="foramt_pack_extended_msg_message_key">訊息</string>
+	<string name="foramt_pack_extended_poif_name_key">名稱</string>
+	<string name="foramt_pack_extended_poif_phone_key">電話</string>
+	<string name="foramt_pack_extended_poif_message_key">訊息</string>
+	<string name="foramt_pack_extended_unknown_formattype_key">格式</string>
+	<string name="foramt_pack_extended_unknown_content_key">內容</string>
+	<string name="foramt_pack_extended_unknown_type">未知</string>
+	<string name="foramt_pack_unknown_formattype_key">格式</string>
+	<string name="foramt_pack_unknown_content_key">內容</string>
+	
+	<!-- Loading Text -->
+	<string name="loading_inbox_activity_list">載入中</string>
+	<string name="loading_inbox_list_item">載入中...</string>
+	
+	<!-- Error -->
+	<string name="exception_unknown_error">未知的錯誤!</string>
+	
+	<!-- Toast -->
+	<string name="toast_non_forwarding_message">此點不能被遞送</string>
+	
+	<!-- Menus -->
+	<string name="WhereAreWe_Title">約在哪?</string>
+	<string name="WhereAreWe_Content">此城御駕盡親征，一院山河永樂平</string>
+	<string name="WhereAmI_Title">我在這~</string>
+	<string name="WhereAmI_Content">禿頂人來文墨苑，英雄一半盡還鄉</string>
+	<string name="WhereAreYou_Title">你在哪?</string>
+	<string name="WhereAreYou_Content">龍困淺灘遭蝦戲，虎落平陽被犬欺</string>
+	<string name="menu_edit_whitelist">編輯白名單</string>
+	<string name="contact_editor_readme">請點選&quot;編輯&quot;按鈕, 並從名單中挑選出允許通信之聯絡人. 透過長按選單中之聯絡人可以將其從名單中移除.</string>
+	<string name="contact_editor_whitelist_title">白名單</string>
+	<string name="contact_editor_edit_button">編輯</string>
+	<string name="contact_editor_home_button">返回</string>
+	<string name="menu_page_meet_here_title">約在哪?</string>
+	<string name="menu_page_where_am_i_title">我在這~</string>
+	<string name="menu_page_where_are_you">你在哪?</string>
+		<string name="dialog_geosms_mylocation_delivery_title">傳送我的位置</string>
+	<string name="dialog_geosms_inbox_forward_title">轉寄 GeoSMS</string>
+	<string name="dialog_geosms_inbox_reply_title">回覆 查詢</string>
+	<string name="context_menu_geosms_inbox_reply">回覆</string>
+	<string name="context_menu_geosms_inbox_forward">轉寄</string>
+	<string name="gps_state_no_provider">沒有合適的資訊提供者...., 請打開衛星定位(GPS)提供者或網路定位(Network)提供者.</string>
+	<string name="toast_non_sending_geosms">訊息無法送出, 等候GPS定位中...請稍後再試</string>
+	<string name="dialog_geosms_inbox_replied_message">此訊息已被回覆</string>
+	<string name="geosms_delivery_reverse_geocode_body_hint">反查座標地址</string>
+	<string name="menu_advance">進階</string>
+	
+	<!-- Sahana -->
+	<string name="app_name_sahana">SAHANA</string>
+	
+	<string name="menu_page_sahana_incident_report_title">意外事件回報</string>
+	<string name="menu_page_sahana_task_dispatch_title">工作分派</string>
+	<string name="menu_page_sahana_team_communication_title">團隊聯繫</string>
+	
+	<string name="menu_sahana_inbox_task_title">工作</string>
+	<string name="menu_sahana_inbox">Sahana 收件匣</string>	
+	
+	<string name="menu_page_sahana_team_communication_label">團隊聯繫</string>
+	
+	<string name="dialog_sahana_incident_delivery_btn_send_text">送出</string>
+	<string name="dialog_sahana_incident_delivery_editText_hint_text">狀況描述</string>
+	<string name="dialog_sahana_incident_delivery_title">回報目前位置所發生的事件</string>
+</resources>

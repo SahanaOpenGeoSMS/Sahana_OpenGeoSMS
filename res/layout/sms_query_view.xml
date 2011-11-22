@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <RelativeLayout-->
+<com.sahana.geosmser.view.SMSQueryView 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:padding="4px" android:id="@+id/SMSQueryViewMainPanel" android:layout_height="fill_parent" android:layout_width="fill_parent">
+	<TableLayout android:id="@+id/TableLayout01" android:layout_height="wrap_content" android:layout_width="wrap_content" android:soundEffectsEnabled="false" android:stretchColumns="0" android:shrinkColumns="0">
+		<TableRow android:id="@+id/TableRow01" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_width="wrap_content">
+			<com.sahana.geosmser.widget.AutoCompleteSMSTextView android:id="@+id/SMSQueryPhoneNumber" android:maxLines="1" android:singleLine="true" android:layout_width="fill_parent" android:layout_marginBottom="2px" android:layout_marginTop="2px" android:layout_height="wrap_content" android:hint="@string/geosms_delivery_message_receiver_hint" />
+			<Button android:layout_width="wrap_content" android:text="@string/geosms_delivery_message_send_button" android:id="@+id/SMSQuerySend" android:layout_height="wrap_content" android:layout_marginBottom="2px"></Button>
+		</TableRow>
+	</TableLayout>
+</com.sahana.geosmser.view.SMSQueryView>
+<!--</RelativeLayout>-->
