@@ -233,7 +233,7 @@ public class GeoSMSContactEditor extends Activity {
 
         @Override
         public void onClick(View arg0) {
-            startActivity(new Intent(GeoSMSContactEditor.this, MainAct.class));
+            startActivity(new Intent(GeoSMSContactEditor.this, WhereToMeet.class));
             finish();
         }
 

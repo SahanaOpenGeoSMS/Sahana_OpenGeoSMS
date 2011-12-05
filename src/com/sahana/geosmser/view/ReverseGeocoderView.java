@@ -16,7 +16,7 @@ import org.json.JSONTokener;
 
 import com.google.android.maps.GeoPoint;
 import com.sahana.geosmser.GeoSMSPack;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.widget.NetworkStateDetector;
 
 import android.content.Context;
@@ -113,7 +113,7 @@ public class ReverseGeocoderView extends RelativeLayout{
            .GeoSMSPackFactory
            .createBasicPack(getGeoByAddress(mEditText.getText().toString()));
             Intent mIntent = new Intent();
-            mIntent.setClass(mContext, MainAct.class);
+            mIntent.setClass(mContext, WhereToMeet.class);
             Bundle mBundle = new Bundle();
             mBundle.putParcelable(KEY_VALUE, mPack);
             mIntent.putExtras(mBundle);
@@ -151,10 +151,10 @@ public class ReverseGeocoderView extends RelativeLayout{
             JSONObject responseData = json.getJSONObject("responseData");
             JSONObject viewport = responseData.getJSONObject("viewport");
             JSONObject center = viewport.getJSONObject("center");
-            Log.d(MainAct.TAG, "" + viewport.toString());
+            Log.d(WhereToMeet.TAG, "" + viewport.toString());
             mGeoPoint = new GeoPoint((int)center.getDouble("lat"), (int)center.getDouble("lng"));
         } catch (JSONException e) {
-            Log.d(MainAct.TAG, "" + e.getMessage());
+            Log.d(WhereToMeet.TAG, "" + e.getMessage());
         }
         
         return mGeoPoint;
@@ -173,11 +173,11 @@ public class ReverseGeocoderView extends RelativeLayout{
                     double mLongitude = mAddress.getLongitude()*1E6;
                     mGeoPoint = new GeoPoint((int)mLatitude, (int)mLongitude);
                 } else {
-                    Log.d(MainAct.TAG, "Address Not Found!");
+                    Log.d(WhereToMeet.TAG, "Address Not Found!");
                 }
             } 
         } catch (Exception e) {
-            Log.d(com.sahana.geosmser.MainAct.TAG, e.getMessage());
+            Log.d(com.sahana.geosmser.WhereToMeet.TAG, e.getMessage());
         }
         return mGeoPoint;
     }

@@ -9,7 +9,7 @@ import com.OpenGeoSMS.writer.IWriter.OnWriteListener;
 import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSPack;
 import com.sahana.geosmser.GeoSMSPackFactory;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.view.SMSDeliveryView.ISMSDeliveryRenderer;
 import com.sahana.geosmser.widget.AutoCompleteSMSTextView;
 
@@ -138,7 +138,7 @@ public class SMSQueryView extends RelativeLayout {
 		public void onClick(View v) {
 		    sendingCode = 0;
             btnSMSSend.setEnabled(false);
-            handleDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
+            handleDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
             if (currPack != null) {
                 smsWriter.write(currPack, autoedtPhoneNumber.getValue());
             } else {

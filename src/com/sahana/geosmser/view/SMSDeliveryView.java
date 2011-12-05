@@ -6,8 +6,8 @@ import java.util.EventListener;
 import com.OpenGeoSMS.GeoLocation;
 import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSPack;
-import com.sahana.geosmser.MainAct;
-import com.sahana.geosmser.Menus;
+import com.sahana.geosmser.WhereToMeet;
+import com.sahana.geosmser.TeamCommunication;
 import com.sahana.geosmser.gps.Geocoder;
 import com.sahana.geosmser.widget.AutoCompleteSMSTextView;
 
@@ -111,7 +111,7 @@ public class SMSDeliveryView extends RelativeLayout {
 	@Override
 	protected void onDetachedFromWindow() {
 		if(mIsInflated) {
-			hanMessageSent.sendEmptyMessage(Menus.DIALOG_SMS_DELIVERY_CANCEL);
+			hanMessageSent.sendEmptyMessage(TeamCommunication.DIALOG_SMS_DELIVERY_CANCEL);
 		}
 		super.onDetachedFromWindow();
 	}
@@ -217,7 +217,7 @@ public class SMSDeliveryView extends RelativeLayout {
 	}
 	
 	private void closeView() {
-		handleDialog(MainAct.CODE_DISMISS_DIALOG_SMS_DELIVERY);
+		handleDialog(WhereToMeet.CODE_DISMISS_DIALOG_SMS_DELIVERY);
 	}
 	
 	public void clearInputField() {
@@ -300,7 +300,7 @@ public class SMSDeliveryView extends RelativeLayout {
 		PendingIntent piSendSMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(SENT_SMS_ACTION), 0);
 		//PendingIntent piDeliverySMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(DELIVERY_SMS_ACTION), 0);
 		
-		handleDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+		handleDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
 		isMessageSent = true;
 		//smsManager.sendTextMessage(pPhoneNumber, null, pMessage, piSendSMS, piDeliverySMS);
 		smsManager = SmsManager.getDefault();
@@ -464,7 +464,7 @@ public class SMSDeliveryView extends RelativeLayout {
 		
 		private void handleMessageSent(HanMessageSentDialogPack pack) {
 			if(hanMessageSent != null) {
-				Message msg = hanMessageSent.obtainMessage(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENT, pack);
+				Message msg = hanMessageSent.obtainMessage(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT, pack);
 				hanMessageSent.sendMessage(msg);
 			}
 		}

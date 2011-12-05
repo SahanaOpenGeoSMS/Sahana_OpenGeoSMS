@@ -3,7 +3,7 @@ package com.sahana.geosmser.view;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.gps.MyLocation;
 import com.sahana.geosmser.gps.MyLocation.ProvideType;
 

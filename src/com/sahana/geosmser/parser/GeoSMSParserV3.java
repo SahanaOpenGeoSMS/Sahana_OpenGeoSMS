@@ -18,7 +18,7 @@ import com.OpenGeoSMS.parser.HeaderParameterNotFoundException;
 import com.OpenGeoSMS.parser.HeaderUnknownGeoSMSTypeFormatException;
 import com.OpenGeoSMS.reader.QueryResult;
 import com.OpenGeoSMS.renderer.Renderer;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 
 
 public class GeoSMSParserV3 {

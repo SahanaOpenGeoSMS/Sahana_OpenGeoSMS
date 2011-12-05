@@ -1,6 +1,6 @@
 package com.sahana.geosmser.database;
 
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 
 import android.content.ContentValues;
 import android.content.Context;

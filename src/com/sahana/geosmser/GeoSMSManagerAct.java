@@ -196,7 +196,7 @@ public class GeoSMSManagerAct extends Activity {
                 adBuilderDelGeoSMS.setNegativeButton(R.string.button_no_text, null);
                 return adBuilderDelGeoSMS.create();
                 
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
                 pdSMSDVMessageSending = new ProgressDialog(this);
                 pdSMSDVMessageSending.setTitle(R.string.dialog_geosms_delivery_message_sending_title);
                 pdSMSDVMessageSending.setMessage(getString(R.string.dialog_geosms_delivery_message_sending_message));
@@ -204,14 +204,14 @@ public class GeoSMSManagerAct extends Activity {
                 pdSMSDVMessageSending.setOnKeyListener(evtDialogDisableKeyBack);
                 return pdSMSDVMessageSending;
                 
-            case MainAct.DIALOG_SMS_QUERY:
+            case WhereToMeet.DIALOG_SMS_QUERY:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_inbox_forward_title)
                 .setView(mSMSQueryView)
                 .setOnKeyListener(new DialogEvtDisableSMSQueryDialogKeyBackOnKeyListener())
                 .create();
                 
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_delivery_message_sent_title)
                 .setMessage(R.string.dialog_geosms_delivery_message_sent_message)
@@ -219,12 +219,12 @@ public class GeoSMSManagerAct extends Activity {
                     @Override 
                     public void onClick(DialogInterface dialog, int which) {
                         mSMSQueryView.clearInputField();
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENT);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT);
                     }
                 })
                 .create();
                 
-            case MainAct.DIALOG_SMS_QUERY_EXIT_CONFORM:
+            case WhereToMeet.DIALOG_SMS_QUERY_EXIT_CONFORM:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_delivery_exit_conform_title)
                 .setMessage(R.string.dialog_geosms_delivery_exit_conform_message)
@@ -237,7 +237,7 @@ public class GeoSMSManagerAct extends Activity {
                 .setNegativeButton(R.string.button_no_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showDialog(MainAct.DIALOG_SMS_QUERY);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY);
                     }
                 })
                 .create();
@@ -308,12 +308,12 @@ public class GeoSMSManagerAct extends Activity {
             case ID_ALERTDIALOG_DELETEGEOSMS:
                 deleteGeoSMSListener.setID(mCurrentGeoSMSID);
                 break;
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
                 ProgressDialog dialog = (ProgressDialog)pDialog;
                 dialog.setTitle(R.string.dialog_geosms_delivery_message_sending_title);
                 dialog.setMessage(getString(R.string.dialog_geosms_delivery_message_sending_message));
                 break;
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT:
                 AlertDialog queryDialog = (AlertDialog) pDialog;
                 queryDialog.setMessage(getString(R.string.message_sent_result_ok));
                 break;
@@ -399,7 +399,7 @@ public class GeoSMSManagerAct extends Activity {
             if(keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss();
                 if(!mSMSQueryView.getPhoneFieldText().trim().equals("")) {
-                    showDialog(MainAct.DIALOG_SMS_QUERY_EXIT_CONFORM);
+                    showDialog(WhereToMeet.DIALOG_SMS_QUERY_EXIT_CONFORM);
                 }
                 return true;
             }
@@ -429,14 +429,14 @@ public class GeoSMSManagerAct extends Activity {
                         checkingTimes += 1;
                         messageSentCheckingHandler.postDelayed(mMessageSentCheckingTask, 1000);
                     case 1:
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
-                        showDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENT);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT);
                     case -1:
                         
                     }
                 }
                 else {
-                    dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
+                    dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
                     Toast.makeText(getApplicationContext(), R.string.message_sent_handler_checking_timeout, Toast.LENGTH_LONG).show();
                 }
             }
@@ -452,9 +452,9 @@ public class GeoSMSManagerAct extends Activity {
         
         @Override public void handleMessage(Message msg) {
             switch(msg.what) {
-                case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY);
-                        showDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
+                case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
                         checkingTimes = 0;
                         messageSentCheckingHandler.removeCallbacks(mMessageSentCheckingTask);
                         messageSentCheckingHandler.postDelayed(mMessageSentCheckingTask, 1000);
@@ -651,7 +651,7 @@ public class GeoSMSManagerAct extends Activity {
         public boolean onMenuItemClick(MenuItem arg0) {
             setCurrentSelectedGeoSMSPackForSMSDelivery(gItem.mGeoSMSPack);
             mSMSQueryView.setCurrGeoSMSPack(gItem.mGeoSMSPack);
-            me.showDialog(MainAct.DIALOG_SMS_QUERY);
+            me.showDialog(WhereToMeet.DIALOG_SMS_QUERY);
             return true;
         }
         
@@ -686,7 +686,7 @@ public class GeoSMSManagerAct extends Activity {
             
             switch(mCurrentLaunchMode) {
                 case ID_LAUNCH_MODE_STANDALONE:
-                    Intent i = new Intent(me, com.sahana.geosmser.MainAct.class);
+                    Intent i = new Intent(me, com.sahana.geosmser.WhereToMeet.class);
                     i.putExtra(GeoSMSService.Key_Extra_SMSPack, pack);
                     //i.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

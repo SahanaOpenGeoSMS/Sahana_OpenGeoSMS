@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.sahana.geosmser.R;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 
 import android.content.Context;
 import android.content.Intent;

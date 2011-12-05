@@ -115,10 +115,10 @@
 	<string name="app_name_sahana">SAHANA</string>
 	
 	<string name="menu_page_sahana_incident_report_title">意外事件回報</string>
-	<string name="menu_page_sahana_task_dispatch_title">工作分派</string>
+	<string name="menu_page_sahana_task_dispatch_title">工作分派收件匣</string>
 	<string name="menu_page_sahana_team_communication_title">團隊聯繫</string>
 	
-	<string name="menu_sahana_inbox_task_title">工作</string>
+	<string name="menu_sahana_inbox_task_title">工作分派收件匣</string>
 	<string name="menu_sahana_inbox">Sahana 收件匣</string>	
 	
 	<string name="menu_page_sahana_team_communication_label">團隊聯繫</string>

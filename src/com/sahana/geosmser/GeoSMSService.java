@@ -156,7 +156,7 @@ public class GeoSMSService extends Service {
                     nm.notify(id, n);
                     break;
                 default:
-                    Intent i = new Intent(this, com.sahana.geosmser.MainAct.class);
+                    Intent i = new Intent(this, com.sahana.geosmser.WhereToMeet.class);
                     i.putExtra(Key_Extra_SMSPack, pack);
                     // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     // i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

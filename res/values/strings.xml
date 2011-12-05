@@ -40,6 +40,7 @@
     <string name="button_yes_text">Yes</string>
     <string name="button_no_text">No</string>
     <string name="button_sure_text">Sure</string>
+    <string name="button_ok_text">OK</string>
     
     <!-- Message Sent Result -->
     <string name="message_sent_result_ok">SMS sent</string>
@@ -117,15 +118,20 @@
 	<string name="app_name_sahana">SAHANA</string>
 	
 	<string name="menu_page_sahana_incident_report_title">Incident Report</string>
-	<string name="menu_page_sahana_task_dispatch_title">Task Dispatch</string>
+	<string name="menu_page_sahana_task_dispatch_title">Task Dispatch Inbox</string>
 	<string name="menu_page_sahana_team_communication_title">Team Communication</string>
 	
-	<string name="menu_sahana_inbox_task_title">Task</string>
-	<string name="menu_sahana_inbox">Sahana Inbox</string>	
+	<string name="menu_sahana_inbox_task_title">Task Dispatch Inbox</string>
+	<string name="menu_sahana_inbox">Inbox</string>	
 	
 	<string name="menu_page_sahana_team_communication_label">Team Communication</string>
 	
 	<string name="dialog_sahana_incident_delivery_btn_send_text">Send</string>
 	<string name="dialog_sahana_incident_delivery_editText_hint_text">Short Description</string>
 	<string name="dialog_sahana_incident_delivery_title">Incident Report with My Location</string>
+	
+	<string name="dialog_where_to_meet_about_title">About Where to meet</string>
+	<string name="dialog_where_to_meet_about_message">Double click the location you want to meet with your friend on the map</string>
+	<string name="menu_where_to_meet_about">About</string>
+	
 </resources>

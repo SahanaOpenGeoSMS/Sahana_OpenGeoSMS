@@ -6,7 +6,7 @@ import java.util.Date;
 
 import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSPack;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.view.GeoSMSListItemView;
 
 import android.os.Parcel;

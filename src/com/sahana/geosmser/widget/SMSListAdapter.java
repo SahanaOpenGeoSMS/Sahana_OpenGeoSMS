@@ -13,7 +13,7 @@ import com.OpenGeoSMS.parser.GeoSMSParser;
 import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSManagerAct;
 import com.sahana.geosmser.GeoSMSPack;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.GeoSMSManagerAct.ViewState;
 import com.sahana.geosmser.database.QueryRepliedIDDBAdapter;
 import com.sahana.geosmser.format.GeoSMSSahanaFormat;

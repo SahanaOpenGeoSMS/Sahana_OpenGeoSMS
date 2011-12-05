@@ -4,12 +4,12 @@
 <!-- android:versionCode="7" android:versionName="3.5.3.5"> -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="1.0.0" package="com.sahana.geosmser" android:versionCode="1">
+      android:versionName="1.0.1" package="com.sahana.geosmser" android:versionCode="2">
     <!--application android:label="@string/app_name" android:icon="@drawable/geosmser_icon" android:debuggable="true"-->
     <application android:label="@string/app_name_sahana" android:icon="@drawable/sahana_icon" android:debuggable="true">	
     	<uses-library android:name="com.google.android.maps" />
     
-         <activity android:label="@string/app_name_sahana" android:name="HomepageSahana">
+         <activity android:label="@string/app_name_sahana" android:name=".Homepage">
         <!-- <activity android:label="@string/app_name" android:name="Menus" android:configChanges="orientation"> -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,15 +25,15 @@
 			</intent-filter>
 		</activity>
 		
-		<activity android:name="MainAct" android:configChanges="orientation"></activity>
+		<activity android:name=".WhereToMeet" android:configChanges="orientation"></activity>
 		<!-- <activity android:name="Menus"></activity> -->
 		<!-- <activity android:name="GeoSMSContactEditor"></activity> -->
 		<!-- <activity android:name="ContactListAct"></activity> -->
 		
-		<activity android:name="Menus" android:configChanges="orientation" android:label="@string/menu_page_sahana_team_communication_label"></activity>
+		<activity android:name=".TeamCommunication" android:configChanges="orientation" android:label="@string/menu_page_sahana_team_communication_label"></activity>
 		
-		<activity android:name="MenusSahana" android:configChanges="orientation" android:label="@string/app_name_sahana"></activity>
-		<activity android:name="GeoSMSSahanaManagerAct" android:configChanges="orientation" android:label="@string/menu_sahana_inbox_task_title"></activity>
+		<activity android:name=".Dashboard" android:configChanges="orientation" android:label="@string/app_name_sahana"></activity>
+		<activity android:name=".TaskDispatch" android:configChanges="orientation" android:label="@string/menu_sahana_inbox_task_title"></activity>
 		
 	    
 	    <service android:name="GeoSMSService" android:enabled="true"></service>

@@ -3,7 +3,7 @@ package com.sahana.geosmser.view;
 import com.OpenGeoSMS.format.GeoSMSFormat;
 import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSManagerAct;
-import com.sahana.geosmser.MainAct;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.database.QueryRepliedIDDBAdapter;
 import com.sahana.geosmser.widget.GeoSMSListItem;
 

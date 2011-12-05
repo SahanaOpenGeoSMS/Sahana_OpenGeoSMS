@@ -54,7 +54,7 @@ import com.sahana.geosmser.gps.MyLocation.ProvideType;
 import com.sahana.geosmser.view.*;
 import com.sahana.geosmser.view.SMSDeliveryView.HanMessageSentDialogPack;
 
-public class Menus extends Activity{
+public class TeamCommunication extends Activity{
     
     private static final int DIALOG_REVERSE_GEOCODER = 100;
  
@@ -120,7 +120,7 @@ public class Menus extends Activity{
     @Override
     protected void onPause() {
         // mReverseGeocoderView.setNetworkDetectorTerminated();
-        Log.d(MainAct.TAG, "Pause...");
+        Log.d(WhereToMeet.TAG, "Pause...");
         if (mReverseGeocoder != null && mReverseGeocoder.isShowing()) {
             mReverseGeocoder.dismiss();
         }
@@ -208,11 +208,11 @@ public class Menus extends Activity{
         @Override
         public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {     
             if(keyCode == KeyEvent.KEYCODE_BACK) {
-                dismissDialog(MainAct.DIALOG_SMS_DELIVERY);
+                dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY);
                 // TODO
                 if(!mSMSDeliveryView.getMessageFieldText().trim().equals("")
                         || !mSMSDeliveryView.getPhoneFieldText().trim().equals("")) {
-                    showDialog(MainAct.DIALOG_SMS_DELIVERY_EXIT_SMS_CONFORM);
+                    showDialog(WhereToMeet.DIALOG_SMS_DELIVERY_EXIT_SMS_CONFORM);
                 }
                 else {
                     mSMSDeliveryView.clearSavedState();
@@ -254,7 +254,7 @@ public class Menus extends Activity{
                 
                 return mReverseGeocoder;
                 
-            case MainAct.DIALOG_SMS_DELIVERY:
+            case WhereToMeet.DIALOG_SMS_DELIVERY:
                 //LayoutInflater factory = LayoutInflater.from(this);
                 //final View textEntryView = factory.inflate(R.layout.sms_delivery_view, null);
                 return new AlertDialog.Builder(this)
@@ -262,9 +262,9 @@ public class Menus extends Activity{
                 .setView(mSMSDeliveryView)
                 .setOnKeyListener(new DialogEvtDisableSMSDeliveryDialogKeyBackOnKeyListener())
                 .create();
-            case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING:
+            case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING:
                 
-            case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT:
                 AlertDialog.Builder adBuilderMsgSent = new AlertDialog.Builder(this);
                 adBuilderMsgSent.setTitle(R.string.dialog_geosms_delivery_message_sent_title);
                 adBuilderMsgSent.setMessage(R.string.dialog_geosms_delivery_message_sent_message);
@@ -273,7 +273,7 @@ public class Menus extends Activity{
                     public void onClick(DialogInterface dialog, int which) {                        
                         if(isFinishSMSDeliveryDialog) {                         
                             //dismissDialog(DIALOG_SMS_DELIVERY);
-                            dismissDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+                            dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
                             mSMSDeliveryView.clearSavedState();
                             isFinishSMSDeliveryDialog = false;
                         }               
@@ -284,7 +284,7 @@ public class Menus extends Activity{
                 setSMSDLMessageSentDialogStatus();
                 //dismissDialog(DIALOG_SMS_DELIVERY_MESSAGESENDING);
                 return adSMSDVMessageSent;
-            case MainAct.DIALOG_SMS_DELIVERY_EXIT_SMS_CONFORM:
+            case WhereToMeet.DIALOG_SMS_DELIVERY_EXIT_SMS_CONFORM:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_delivery_exit_conform_title)
                 .setMessage(R.string.dialog_geosms_delivery_exit_conform_message)
@@ -299,12 +299,12 @@ public class Menus extends Activity{
                 .setNegativeButton(R.string.button_no_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showDialog(MainAct.DIALOG_SMS_DELIVERY);
+                        showDialog(WhereToMeet.DIALOG_SMS_DELIVERY);
                     }
                 })
                 .create();
             
-           case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
+           case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
                 pdSMSDVMessageSending = new ProgressDialog(this);
                 pdSMSDVMessageSending.setTitle(R.string.dialog_geosms_delivery_message_sending_title);
                 pdSMSDVMessageSending.setMessage(getString(R.string.dialog_geosms_delivery_message_sending_message));
@@ -312,14 +312,14 @@ public class Menus extends Activity{
                 pdSMSDVMessageSending.setOnKeyListener(evtDialogDisableKeyBack);
                 return pdSMSDVMessageSending;
                 
-            case MainAct.DIALOG_SMS_QUERY:
+            case WhereToMeet.DIALOG_SMS_QUERY:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_query_title)
                 .setView(mSMSQueryView)
                 .setOnKeyListener(new DialogEvtDisableSMSQueryDialogKeyBackOnKeyListener())
                 .create();
                 
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_delivery_message_sent_title)
                 .setMessage(R.string.dialog_geosms_delivery_message_sent_message)
@@ -327,11 +327,11 @@ public class Menus extends Activity{
                     @Override 
                     public void onClick(DialogInterface dialog, int which) {
                         mSMSQueryView.clearInputField();
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENT);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT);
                     }
                 })
                 .create();
-            case MainAct.DIALOG_SMS_QUERY_EXIT_CONFORM:
+            case WhereToMeet.DIALOG_SMS_QUERY_EXIT_CONFORM:
                 return new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_geosms_delivery_exit_conform_title)
                 .setMessage(R.string.dialog_geosms_delivery_exit_conform_message)
@@ -344,7 +344,7 @@ public class Menus extends Activity{
                 .setNegativeButton(R.string.button_no_text, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showDialog(MainAct.DIALOG_SMS_QUERY);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY);
                     }
                 })
                 .create();
@@ -357,17 +357,17 @@ public class Menus extends Activity{
     @Override 
     protected void onPrepareDialog(int id, Dialog pDialog) {
         switch (id) {
-            case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING:        
-            case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING:        
+            case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT:
                 setSMSDLMessageSentDialogStatus();
                 //dismissDialog(DIALOG_SMS_DELIVERY_MESSAGESENDING);
                 break;
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
                 ProgressDialog dialog = (ProgressDialog)pDialog;
                 dialog.setTitle(R.string.dialog_geosms_delivery_message_sending_title);
                 dialog.setMessage(getString(R.string.dialog_geosms_delivery_message_sending_message));
                 break;
-            case MainAct.DIALOG_SMS_QUERY_MESSAGESENT:
+            case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT:
                 AlertDialog queryDialog = (AlertDialog) pDialog;
                 queryDialog.setMessage(getString(R.string.message_sent_result_ok));
                 break;
@@ -392,7 +392,7 @@ public class Menus extends Activity{
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            Intent intent = new Intent(Menus.this, GeoSMSManagerAct.class);
+            Intent intent = new Intent(TeamCommunication.this, GeoSMSManagerAct.class);
             startActivity(intent);
             return true;
         }
@@ -403,7 +403,7 @@ public class Menus extends Activity{
 
         @Override
         public boolean onMenuItemClick(MenuItem arg0) {
-            startActivity(new Intent(Menus.this, GeoSMSContactEditor.class));
+            startActivity(new Intent(TeamCommunication.this, GeoSMSContactEditor.class));
             return true;
         }
         
@@ -414,7 +414,7 @@ public class Menus extends Activity{
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Menus.this, MainAct.class);
+            Intent intent = new Intent(TeamCommunication.this, WhereToMeet.class);
             startActivity(intent);
         }
         
@@ -435,21 +435,21 @@ public class Menus extends Activity{
 
         @Override
         public void onClick(View view) {
-            showDialog(MainAct.DIALOG_SMS_QUERY);
+            showDialog(WhereToMeet.DIALOG_SMS_QUERY);
         }
     };
     
     private void startDeliveryGeoSMS(GeoSMSPack pack) {
         setCurrentSelectedGeoSMSPackForSMSDelivery(pack);
-        showDialog(MainAct.DIALOG_SMS_DELIVERY);
+        showDialog(WhereToMeet.DIALOG_SMS_DELIVERY);
     }
     
     public class MyLocationSenderListener implements LinearLayout.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            mMySubjectLocationGPS = new MyLocation(Menus.this);
-            mMySubjectLocationAGPS = new MyLocation(Menus.this);
+            mMySubjectLocationGPS = new MyLocation(TeamCommunication.this);
+            mMySubjectLocationAGPS = new MyLocation(TeamCommunication.this);
             
             mMySubjectLocationGPS.enable(ProvideType.E_GPS);
             mMySubjectLocationAGPS.enable(ProvideType.E_AGPS);
@@ -471,7 +471,7 @@ public class Menus extends Activity{
                 gPack = GeoSMSPackFactory.createBasicPack(gPoint);
                 startDeliveryGeoSMS(gPack);
             } else {
-                Toast.makeText(Menus.this, R.string.gps_state_no_provider, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TeamCommunication.this, R.string.gps_state_no_provider, Toast.LENGTH_SHORT).show();
             }
             
         }
@@ -484,7 +484,7 @@ public class Menus extends Activity{
             if(keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss();
                 if(!mSMSQueryView.getPhoneFieldText().trim().equals("")) {
-                    showDialog(MainAct.DIALOG_SMS_QUERY_EXIT_CONFORM);
+                    showDialog(WhereToMeet.DIALOG_SMS_QUERY_EXIT_CONFORM);
                 }
                 return true;
             }
@@ -514,14 +514,14 @@ public class Menus extends Activity{
                         checkingTimes += 1;
                         messageSentCheckingHandler.postDelayed(mMessageSentCheckingTask, 1000);
                     case 1:
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
-                        showDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENT);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENT);
                     case -1:
                         
                     }
                 }
                 else {
-                    dismissDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
+                    dismissDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
                     Toast.makeText(getApplicationContext(), R.string.message_sent_handler_checking_timeout, Toast.LENGTH_LONG).show();
                 }
             }
@@ -537,9 +537,9 @@ public class Menus extends Activity{
         
         @Override public void handleMessage(Message msg) {
             switch(msg.what) {
-                case MainAct.DIALOG_SMS_QUERY_MESSAGESENDING:
-                        dismissDialog(MainAct.DIALOG_SMS_QUERY);
-                        showDialog(MainAct.DIALOG_SMS_QUERY_MESSAGESENDING);
+                case WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING:
+                        dismissDialog(WhereToMeet.DIALOG_SMS_QUERY);
+                        showDialog(WhereToMeet.DIALOG_SMS_QUERY_MESSAGESENDING);
                         checkingTimes = 0;
                         messageSentCheckingHandler.removeCallbacks(mMessageSentCheckingTask);
                         messageSentCheckingHandler.postDelayed(mMessageSentCheckingTask, 1000);
@@ -602,7 +602,7 @@ public class Menus extends Activity{
             public void run() {
                 if(checkingTimes < 15) {
                     if(hanMessageSentDialogPack.isFinish) {
-                        dismissDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
                         mMySubjectLocationGPS.disable();
                         mMySubjectLocationAGPS.disable();
                     }
@@ -613,7 +613,7 @@ public class Menus extends Activity{
                 }
                 else {
                     if(!hanMessageSentDialogPack.isFinish) {
-                        dismissDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+                        dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
                         Toast.makeText(getApplicationContext(), R.string.message_sent_handler_checking_timeout, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -629,20 +629,20 @@ public class Menus extends Activity{
         
         @Override public void handleMessage(Message msg) {
             switch(msg.what) {
-                case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENT:
+                case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT:
                     hanMessageSentDialogPack = (HanMessageSentDialogPack) msg.obj;
                     //me.dismissDialog(DIALOG_SMS_DELIVERY_MESSAGESENDING);
-                    showDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENT);
+                    showDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT);
                     break;
-                case MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING:
-                    dismissDialog(MainAct.DIALOG_SMS_DELIVERY);
-                    showDialog(MainAct.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+                case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING:
+                    dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY);
+                    showDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
                     hanMessageSentDialogPack.handler = messageSentCheckingHandler;
                     messageSentCheckingHandler.removeCallbacks(mMessageSentCheckingTask);
                     messageSentCheckingHandler.postDelayed(mMessageSentCheckingTask, 1000);
                     break;
-                case MainAct.CODE_DISMISS_DIALOG_SMS_DELIVERY:
-                    dismissDialog(MainAct.DIALOG_SMS_DELIVERY);
+                case WhereToMeet.CODE_DISMISS_DIALOG_SMS_DELIVERY:
+                    dismissDialog(WhereToMeet.DIALOG_SMS_DELIVERY);
                     break;
                 case DIALOG_SMS_DELIVERY_CANCEL:
                     mMySubjectLocationGPS.disable();
