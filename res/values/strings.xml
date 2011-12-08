@@ -3,8 +3,8 @@
     <string name="app_name">Open GeoSMSer</string>
     <!-- release API Key<string name="my_maps_apikey">0OBaSHxo23kno7wdqq457A9aMPqIiNlux1NH7PA</string> -->
     <!--Ro debug API Key <string name="my_maps_apikey">0SzM4VIV3mOZ6w-VGNhzKBasNZqKTZuoY55H-5g</string>-->
-    
-    <!--Ye release API Key--><string name="my_maps_apikey">0VTyb20YRVif9JuFohf-hui8_k-su7J1lhrh54A</string>
+    <!--Ye release API Key--><string name="my_maps_apikey">0VTyb20YRVidI2_OICv0mGcG_dXIiEKWHGkSvWg</string>
+    <!--Ye release API Key><string name="my_maps_apikey">0VTyb20YRVif9JuFohf-hui8_k-su7J1lhrh54A</string-->
     <!--Ye debug API Key ><string name="my_maps_apikey">0VTyb20YRViffe2cgscxpsKCQBWjx75Kxn53xiA</string-->
     
     <string name="sms_empty">No Open GeoSMS messages in your inbox.</string>
