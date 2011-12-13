@@ -118,10 +118,10 @@
 	<string name="app_name_sahana">SAHANA</string>
 	
 	<string name="menu_page_sahana_incident_report_title">Incident Report</string>
-	<string name="menu_page_sahana_task_dispatch_title">Task Dispatch Inbox</string>
+	<string name="menu_page_sahana_task_dispatch_title">Task Inbox</string>
 	<string name="menu_page_sahana_team_communication_title">Team Communication</string>
 	
-	<string name="menu_sahana_inbox_task_title">Task Dispatch Inbox</string>
+	<string name="menu_sahana_inbox_task_title">Task Inbox</string>
 	<string name="menu_sahana_inbox">Inbox</string>	
 	
 	<string name="menu_page_sahana_team_communication_label">Team Communication</string>
