@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Old Version Information -->
-<!-- android:versionCode="7" android:versionName="3.5.3.5"> -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      android:versionName="1.0.2" package="com.sahana.geosmser" android:versionCode="2">
-    <!--application android:label="@string/app_name" android:icon="@drawable/geosmser_icon" android:debuggable="true"-->
-    <application android:label="@string/app_name_sahana" android:icon="@drawable/sahana_icon" android:debuggable="false">	
+      android:versionName="1.0.3" package="com.sahana.geosmser" android:versionCode="3"  android:installLocation="auto" >
+
+    <application android:label="@string/app_name_sahana" android:icon="@drawable/sahana_icon" android:debuggable="true">	
     	<uses-library android:name="com.google.android.maps" />
     
          <activity android:label="@string/app_name_sahana" android:name=".Homepage">
