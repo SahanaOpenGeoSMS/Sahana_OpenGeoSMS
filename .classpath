@@ -3,8 +3,8 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="lib/gson-1.6.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="D:/Git Code/SahanaGeoSMSer/OpenGeoSMS-1.1.3.7.jar"/>
+	<classpathentry kind="lib" path="libs/gson-1.6.jar"/>
+	<classpathentry kind="lib" path="libs/OpenGeoSMS-1.1.3.7.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
