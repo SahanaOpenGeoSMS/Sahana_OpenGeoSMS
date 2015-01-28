@@ -15,30 +15,40 @@
  ******************************************************************************/
 package com.sahana.geosmser.view;
 
+
 import java.util.ArrayList;
 import java.util.EventListener;
 
 import com.OpenGeoSMS.GeoLocation;
-import com.sahana.geosmser.R;
+import com.sahana.geosmser.Dashboard;
 import com.sahana.geosmser.GeoSMSPack;
-import com.sahana.geosmser.WhereToMeet;
+import com.sahana.geosmser.R;
 import com.sahana.geosmser.TeamCommunication;
-import com.sahana.geosmser.gps.Geocoder;
+import com.sahana.geosmser.WhereToMeet;
 import com.sahana.geosmser.widget.AutoCompleteSMSTextView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Color;
-import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.Contacts;
+import android.provider.Contacts.People;
+import android.provider.Contacts.Phones;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.v4.app.DialogFragment;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.Editable;
@@ -46,149 +56,212 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.AbsSavedState;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ToggleButton;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class SMSDeliveryView extends RelativeLayout {
+
+public class SMSDeliveryDialog extends DialogFragment{
 	public final String SENT_SMS_ACTION = "GEOSMS_SEND_SMS_ACTION";
 	public final String DELIVERY_SMS_ACTION = "GEOSMS_DELIVERY_SMS_ACTION";
-	private final static int CHARS_REMAINING_COUNTER_LIMIT = 25;
 	public final static int LENGTH_MINIMUM_PHONENUMBER = 10;
 	public final static int LENGTH_MINIMUM_FOREIGN_PHONENUMBER = 12;
 	public final static int LENGTH_MINIMUM_MESSAGE = 0;
-	public final static int COLOR_HINT_LIMITED = Color.rgb(255, 147, 147);
 	
+	private Context baseContext;
+	private String contactNumber,msgFieldString,messageContent,positionHeaderInfo ;
+	private int messageCount,messageSize;
+	private boolean isMessageSent;
+	private boolean mIsSMSReceiverRegistered;
+	private static volatile int curSMSReceivedNumber;
+	
+	private SmsManager smsManager;
 	private AutoCompleteSMSTextView autoedtPhoneNumber;
-	private TextView tvMessageCounter, tv;
 	private EditText edtMessage;
-	private EditText edtReverseCode;
-	private Button btnSMSSend;
-	private Button btnReverseCodeAppend;
+	private Button btnSMSSend,btnContact;
 	private ToggleButton ttnReverseCodeShow;
+	private TextView tvMessageCounter, tv;
+	private Handler hanMessageSent;
+	private GeoSMSPack positionPack;
+	private GeoLocation positionLocation;
 	
 	private SendSMSReceiver sendSMSReceiver;
 	private DeliverySMSReceiver deliverySMSReceiver;
-	
-	private Context baseContext;
-	private String positionHeaderInfo, messageContent, msgFieldString, contactNumber;
-	private GeoLocation positionLocation;
-	private int messageCount, messageSize;
-	private SmsManager smsManager;
-	private GeoSMSPack positionPack;
-	private boolean isMessageSent;
-	private boolean mIsSMSReceiverRegistered;
-	private Handler hanMessageSent;
-	
+		
 	public ISMSDeliveryRenderer.OnSourceBindingListener sourceBindingListener;
-	private volatile boolean mIsInflated = false;
-	private static volatile int curSMSReceivedNumber; 
 	
-	public SMSDeliveryView(Context context) {
-		super(context);
+	public SMSDeliveryDialog(Context context){
+		baseContext=context;
+	}
+	
+	public SMSDeliveryDialog(Context context,ISMSDeliveryRenderer.OnSourceBindingListener sourceBindingL,Handler handler) {
+		sourceBindingListener = sourceBindingL;
+		hanMessageSent = handler;
 		baseContext = context;
-	}
-	
-	public SMSDeliveryView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		baseContext = context;
-	}
-
+	}	
+    public SMSDeliveryDialog(){
+    	
+    }
 	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
-		init();
-		bindInflatedComponent();
-		mIsInflated = true;
-	}
-	
-	@Override
-	protected void onAttachedToWindow() {
-		if(mIsInflated) {
-			initEvent();
-			driveBindSource();
-			render();
-			
-			if(!isSMSReceiverRegistered()) {
-				registerSMSSendDeliveryReceiver();
-			}
-		}
-		super.onAttachedToWindow();
-	}
-	
-	@Override
-	protected void onDetachedFromWindow() {
-		if(mIsInflated) {
-			hanMessageSent.sendEmptyMessage(TeamCommunication.DIALOG_SMS_DELIVERY_CANCEL);
-		}
-		super.onDetachedFromWindow();
-	}
-	
-	@Override
-	protected Parcelable onSaveInstanceState() {
-		Parcelable p = super.onSaveInstanceState();
-		GeoSMSPackParcelableWrapper w = new GeoSMSPackParcelableWrapper(p);
+	public void onSaveInstanceState(Bundle bundle) {
+		// TODO Auto-generated method stub
+		GeoSMSPackParcelableWrapper w = new GeoSMSPackParcelableWrapper(bundle);
 		w.mPack = positionPack;
 		w.mIsMessageSent = isMessageSent;
 		w.mCurSMSReceivedNumber = curSMSReceivedNumber;
-		return w;
+		bundle.putParcelable("smsState", w);
+		super.onSaveInstanceState(bundle);
+		
 	}
-	
 	
 	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
-		GeoSMSPackParcelableWrapper w = (GeoSMSPackParcelableWrapper) state;
-		positionPack = w.mPack;
-		isMessageSent = w.mIsMessageSent;
-		curSMSReceivedNumber = w.mCurSMSReceivedNumber;
-		super.onRestoreInstanceState(null);
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+	        clearSavedState();
+			hanMessageSent.sendEmptyMessage(TeamCommunication.DIALOG_SMS_DELIVERY_CANCEL);
+			dismiss();
+		super.onDestroy();
 	}
 	
-	private void init() {
+	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d("hi","hi");
+		super.onActivityCreated(savedInstanceState);        
+	}
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	    Log.d("hi","first");
+    	    if(savedInstanceState!=null){
+    		GeoSMSPackParcelableWrapper w = savedInstanceState.getParcelable("smsState");
+    		positionPack = w.mPack;
+    		isMessageSent = w.mIsMessageSent;
+    		curSMSReceivedNumber = w.mCurSMSReceivedNumber;
+    	    }
+            init();          
+    }
+    
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+    	
+    	getDialog().setTitle("SMS Delivery View");
+    	Log.d("hi","hi3");
+    	View view = inflater.inflate(R.layout.sms_delivery_dialog, container, false);
+    	bindInflatedComponent(view);
+    	render();
+    	initEvent();
+    	driveBindSource();
+    	
+		if(!isSMSReceiverRegistered()) {
+			registerSMSSendDeliveryReceiver();
+		}
+		
+    	return view;
+    }
+  
+    public void registerSMSSendDeliveryReceiver() {
+		mIsSMSReceiverRegistered = true;
+		sendSMSReceiver = new SendSMSReceiver();
+		deliverySMSReceiver = new DeliverySMSReceiver();
+		baseContext.registerReceiver(sendSMSReceiver, new IntentFilter(SENT_SMS_ACTION));
+		baseContext.registerReceiver(deliverySMSReceiver, new IntentFilter(DELIVERY_SMS_ACTION));
+	}
+    
+	public void unregisterSMSSendDeliveryReceiver() {
+		if(sendSMSReceiver != null) baseContext.unregisterReceiver(sendSMSReceiver);
+		if(deliverySMSReceiver != null ) baseContext.unregisterReceiver(deliverySMSReceiver);
+		mIsSMSReceiverRegistered = false;
+	}
+	   
+    private String getRString(int id) {
+		return baseContext.getString(id);
+	}
+    
+    private void init() {
 		contactNumber = "";
 		msgFieldString = "";
 		isMessageSent = false;
 		curSMSReceivedNumber = 0;
 		mIsSMSReceiverRegistered = false;
 	}
-	
-	private void bindInflatedComponent() {
-		autoedtPhoneNumber = (AutoCompleteSMSTextView) findViewById(R.id.AutoEditTextSMSPhoneNumber);
-		edtMessage = (EditText) findViewById(R.id.EditTextSMSMessage);
-		edtReverseCode = (EditText) findViewById(R.id.EditTextReverseCode);
-		tvMessageCounter = (TextView) findViewById(R.id.TextViewSMSMessageCounter);
-		
-		btnSMSSend = (Button) findViewById(R.id.ButtonSMSSend);
-		btnReverseCodeAppend = (Button) findViewById(R.id.ButtonReverseCodeAppend);
-		ttnReverseCodeShow = (ToggleButton) findViewById(R.id.ToggleButtonReverseCodeShow);
+    
+    private void bindInflatedComponent(View view) {
+    	autoedtPhoneNumber = (AutoCompleteSMSTextView) view.findViewById(R.id.AutoEditTextSMSPhoneNumber);
+		edtMessage = (EditText) view.findViewById(R.id.EditTextSMSMessage);
+		tvMessageCounter = (TextView) view.findViewById(R.id.TextViewSMSMessageCounter);
+		btnSMSSend = (Button) view.findViewById(R.id.ButtonSMSSend);
+		btnContact = (Button) view.findViewById(R.id.contact);
 	}
-	
-	private void initEvent() {
+    
+    private void initEvent() {
 		btnSMSSend.setOnClickListener(new EvtOnClickSMSDelivery());
 		autoedtPhoneNumber.setOnItemClickListener(new EvtOnItemClickAutoedtPhoneNumber());
 		autoedtPhoneNumber.addTextChangedListener(new DelContactTextWatcher());
-		edtMessage.addTextChangedListener(new DelMessageTextWatcher());
-		ttnReverseCodeShow.setOnClickListener(new EvtOnClickReverseCodeShow());
-		btnReverseCodeAppend.setOnClickListener(new EvtOnClickReverseCodeAppend());
+		edtMessage.addTextChangedListener(new DelMessageTextWatcher());	
+		btnContact.setOnClickListener(new EvtOnClickPickContact());
 	}
+    
+    private class EvtOnClickPickContact implements OnClickListener {
 
-	protected void driveBindSource() {	
-	    
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+			Intent it= new Intent(Intent.ACTION_PICK, Phone.CONTENT_URI);
+            startActivityForResult(it, 1);	
+            
+			
+		}
+    	
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	
+    	switch (requestCode) {
+            case 1:
+            	if(data!=null){
+            	Uri contactData = data.getData();
+            	
+                Cursor c =  baseContext.getContentResolver().query(contactData, null,null, null, null);
+                if (c.moveToFirst()) {
+                    String phone = c.getString(c.getColumnIndexOrThrow(Phone.NUMBER));
+                    setPhoneFieldText(phone);
+                    updateFieldInfo();
+                    updateSendSMSButtonState();
+                }
+                else {
+                	 Log.d("SMSDelivery", "No Contact selected");
+                }
+            }
+        
+       }    
+    }
+    
+    protected void driveBindSource() {	
+    	Log.d("position1","driveBind");
 		if(sourceBindingListener != null) {
 			if(positionPack == null) {
+				Log.d("position","driveBind");
 				positionPack = new GeoSMSPack();
 				sourceBindingListener.onSourceBind(positionPack);
 			}
 			
 			if(positionPack != null) {
 				positionHeaderInfo = positionPack.getHeaderString();
+				Log.d("position","driveBind1");
 				positionLocation = positionPack.getGeoLocation();
 				String text = positionPack.getText();
 				// setMessageFieldText((text != null) ? text : "");
@@ -201,53 +274,20 @@ public class SMSDeliveryView extends RelativeLayout {
 			closeView();
 		}
 	}
-	
-	private void render() {
+    
+    private void render() {
 		updateMessageTextCounter();
 		updateSendSMSButtonState();
 		tvMessageCounter.setTextColor(Color.WHITE);
     	tvMessageCounter.setVisibility(View.VISIBLE);
 	}
-	
+    
 	public boolean isSMSReceiverRegistered() {
 		return mIsSMSReceiverRegistered;
 	}
 	
-	public void registerSMSSendDeliveryReceiver() {
-		mIsSMSReceiverRegistered = true;
-		sendSMSReceiver = new SendSMSReceiver();
-		deliverySMSReceiver = new DeliverySMSReceiver();
-		baseContext.registerReceiver(sendSMSReceiver, new IntentFilter(SENT_SMS_ACTION));
-		baseContext.registerReceiver(deliverySMSReceiver, new IntentFilter(DELIVERY_SMS_ACTION));
-	}
-	
-	public void unregisterSMSSendDeliveryReceiver() {
-		if(sendSMSReceiver != null) baseContext.unregisterReceiver(sendSMSReceiver);
-		if(deliverySMSReceiver != null ) baseContext.unregisterReceiver(deliverySMSReceiver);
-		mIsSMSReceiverRegistered = false;
-	}
-	
-	private String getRString(int id) {
-		return baseContext.getString(id);
-	}
-	
-	private void closeView() {
-		handleDialog(WhereToMeet.CODE_DISMISS_DIALOG_SMS_DELIVERY);
-	}
-	
-	public void clearInputField() {
-		autoedtPhoneNumber.setText("");
-		edtMessage.setText("");
-		edtReverseCode.setText("");
-		ttnReverseCodeShow.setChecked(false);
-	}
-	
 	public void clearSavedState() {
 		positionPack = null;
-	}
-	
-	public String getReverseCodeFieldText() {
-	    return edtReverseCode.getText().toString();
 	}
 	
 	public String getPhoneFieldText() {
@@ -274,9 +314,105 @@ public class SMSDeliveryView extends RelativeLayout {
 		hanMessageSent = handler;
 	}
 	
+    private class EvtOnClickSMSDelivery implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			  String phoneNumber = autoedtPhoneNumber.getValue();
+              String message = edtMessage.getText().toString();
+              
+              if(!contactNumber.matches("\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}") &&
+                      !contactNumber.matches(".*<\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}>") && 
+                      // Modify by Korth 20101203
+                      !contactNumber.matches("^.?\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}")) {
+            	  Toast.makeText(baseContext, "The phone number is unusable.", Toast.LENGTH_SHORT).show();
+            	  return;
+              }
+              
+              if (message.length() >= LENGTH_MINIMUM_MESSAGE) {
+            		  btnSMSSend.setEnabled(false);
+                      sendSMS(phoneNumber, messageContent);
+              }
+              else
+                  Toast.makeText(baseContext, "Word length is no less than " + LENGTH_MINIMUM_MESSAGE, Toast.LENGTH_SHORT).show();
+		}
+	}
+    
+    private class EvtOnItemClickAutoedtPhoneNumber implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			if(baseContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				autoedtPhoneNumber.isClicked = true;
+				autoedtPhoneNumber.dismissDropDown();
+				//Cursor cursor = (Cursor) contactListAdapter.getAdapter().getItem(position);
+				//autoedtPhoneNumber.setText(cursor.getString(3));
+			}
+		}
+	}
+	
+    private class DelContactTextWatcher implements TextWatcher {
+		@Override
+		public void afterTextChanged(Editable s) {
+			updateFieldInfo();
+			updateSendSMSButtonState();
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) { }
+	}
+	
+	
+	private class DelMessageTextWatcher implements TextWatcher {
+		@Override
+		public void afterTextChanged(Editable s) { }
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			updateFieldInfo();
+			updateMessageTextCounter();
+			updateSendSMSButtonState();
+		}
+	}
+	
+    private void sendSMS(String pPhoneNumber, String pMessage) {
+		PendingIntent piSendSMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(SENT_SMS_ACTION), 0);
+		//PendingIntent piDeliverySMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(DELIVERY_SMS_ACTION), 0);
+		
+		handleDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
+		isMessageSent = true;
+		//smsManager.sendTextMessage(pPhoneNumber, null, pMessage, piSendSMS, piDeliverySMS);
+		smsManager = SmsManager.getDefault();
+		
+		ArrayList<String> msgList = smsManager.divideMessage(pMessage);
+		ArrayList<PendingIntent> piList = new ArrayList<PendingIntent>();
+		for(int i=0; i<msgList.size(); i++) {
+			piList.add(piSendSMS);
+		}
+		// Modify by Korth 20101203
+		if (pPhoneNumber.charAt(0) != '+') {
+		    smsManager.sendMultipartTextMessage(pPhoneNumber, null, msgList, piList, null);
+		} else {
+		    smsManager.sendMultipartTextMessage(pPhoneNumber.substring(1), null, msgList, piList, null);
+		}
+	}
+    
+	private void handleDialog(int code) {
+		if(hanMessageSent != null) {
+			Message msg = hanMessageSent.obtainMessage(code);
+			hanMessageSent.sendMessage(msg);
+		}
+	}
+	
 	private void updateFieldInfo() {
 		contactNumber = autoedtPhoneNumber.getText().toString();
 		msgFieldString = edtMessage.getText().toString();
+		Log.d("msg",msgFieldString);
 		positionPack.setText((msgFieldString != "") ? msgFieldString : null);
 	}
 	
@@ -311,127 +447,16 @@ public class SMSDeliveryView extends RelativeLayout {
 		tvMessageCounter.setText(String.valueOf(remaining) + "/" +String.valueOf(messageCount));
 	}
 	
-	private void sendSMS(String pPhoneNumber, String pMessage) {
-		PendingIntent piSendSMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(SENT_SMS_ACTION), 0);
-		//PendingIntent piDeliverySMS = PendingIntent.getBroadcast(baseContext, 0, new Intent(DELIVERY_SMS_ACTION), 0);
-		
-		handleDialog(WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING);
-		isMessageSent = true;
-		//smsManager.sendTextMessage(pPhoneNumber, null, pMessage, piSendSMS, piDeliverySMS);
-		smsManager = SmsManager.getDefault();
-		
-		ArrayList<String> msgList = smsManager.divideMessage(pMessage);
-		ArrayList<PendingIntent> piList = new ArrayList<PendingIntent>();
-		for(int i=0; i<msgList.size(); i++) {
-			piList.add(piSendSMS);
-		}
-		// Modify by Korth 20101203
-		if (pPhoneNumber.charAt(0) != '+') {
-		    smsManager.sendMultipartTextMessage(pPhoneNumber, null, msgList, piList, null);
-		} else {
-		    smsManager.sendMultipartTextMessage(pPhoneNumber.substring(1), null, msgList, piList, null);
-		}
+	private void closeView() {
+		handleDialog(WhereToMeet.CODE_DISMISS_DIALOG_SMS_DELIVERY);
 	}
 	
-	private void handleDialog(int code) {
-		if(hanMessageSent != null) {
-			Message msg = hanMessageSent.obtainMessage(code);
-			hanMessageSent.sendMessage(msg);
-		}
+	public void clearInputField() {
+		autoedtPhoneNumber.setText("");
+		edtMessage.setText("");
+		//ttnReverseCodeShow.setChecked(false);
 	}
-	
-	private class EvtOnClickReverseCodeAppend implements OnClickListener {
-        @Override
-        public void onClick(View arg0) {
-         // TODO Bind ReverseCode into Message EditText
-            if (!edtReverseCode.getText().equals("")) {
-                edtMessage.append(edtReverseCode.getText().toString());
-            } 
-        }
-	    
-	}
-	
-	private class EvtOnClickReverseCodeShow implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            if (ttnReverseCodeShow.isChecked() && positionLocation != null) {
-             // TODO show ReverseCode in EditText
-                String RLocation = Geocoder.reverseGeocode(positionLocation);
-                edtReverseCode.setText(RLocation);
-            } else {
-                edtReverseCode.setText("");
-            }
-        }
-	}
-	
-	private class EvtOnClickSMSDelivery implements OnClickListener {
-		@Override
-		public void onClick(View v) {
-			  String phoneNumber = autoedtPhoneNumber.getValue();
-              String message = edtMessage.getText().toString();
-              
-              if(!contactNumber.matches("\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}") &&
-                      !contactNumber.matches(".*<\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}>") && 
-                      // Modify by Korth 20101203
-                      !contactNumber.matches("^.?\\d{" + LENGTH_MINIMUM_PHONENUMBER + ",}")) {
-            	  Toast.makeText(baseContext, "The phone number is unusable.", Toast.LENGTH_SHORT).show();
-            	  return;
-              }
-              
-              if (message.length() >= LENGTH_MINIMUM_MESSAGE) {
-            		  btnSMSSend.setEnabled(false);
-                      sendSMS(phoneNumber, messageContent);
-              }
-              else
-                  Toast.makeText(baseContext, "Word length is no less than " + LENGTH_MINIMUM_MESSAGE, Toast.LENGTH_SHORT).show();
-		}
-	}
-	
-	
-	private class EvtOnItemClickAutoedtPhoneNumber implements OnItemClickListener {
 
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			if(baseContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				autoedtPhoneNumber.isClicked = true;
-				autoedtPhoneNumber.dismissDropDown();
-				//Cursor cursor = (Cursor) contactListAdapter.getAdapter().getItem(position);
-				//autoedtPhoneNumber.setText(cursor.getString(3));
-			}
-		}
-	}
-	
-	
-	private class DelContactTextWatcher implements TextWatcher {
-		@Override
-		public void afterTextChanged(Editable s) {
-			updateFieldInfo();
-			updateSendSMSButtonState();
-		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) { }
-	}
-	
-	
-	private class DelMessageTextWatcher implements TextWatcher {
-		@Override
-		public void afterTextChanged(Editable s) { }
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-			updateFieldInfo();
-			updateMessageTextCounter();
-			updateSendSMSButtonState();
-		}
-	}
-	
 	private class SendSMSReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context pContext, Intent pIntent) {
@@ -501,7 +526,6 @@ public class SMSDeliveryView extends RelativeLayout {
 		}
 	}
 	
-	
 	public static class HanMessageSentDialogPack implements Parcelable {
 		public String message = null;
 		public boolean isFinish = false;
@@ -544,13 +568,11 @@ public class SMSDeliveryView extends RelativeLayout {
 		}
 	}
 	
-	
 	public interface ISMSDeliveryRenderer {
 		public interface OnSourceBindingListener extends EventListener {
 			public void onSourceBind(GeoSMSPack pack);
 		}
 	}
-	
 	
 	public static class GeoSMSPackParcelableWrapper extends AbsSavedState {
 		public static final Parcelable.Creator<GeoSMSPackParcelableWrapper> CREATOR = new Parcelable.Creator<GeoSMSPackParcelableWrapper>() {
@@ -585,4 +607,5 @@ public class SMSDeliveryView extends RelativeLayout {
 			mPack = in.readParcelable(GeoSMSPack.class.getClassLoader());
 		}
 	}
+
 }

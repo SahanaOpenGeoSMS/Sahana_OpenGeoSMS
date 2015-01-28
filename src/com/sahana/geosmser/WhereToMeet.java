@@ -33,9 +33,9 @@ import com.sahana.geosmser.overlay.SingleLocationOverlay;
 import com.sahana.geosmser.overlay.IDel.IGeoSMSPackBinder;
 import com.sahana.geosmser.overlay.IDel.IMenuEvtOverlayLocation;
 import com.sahana.geosmser.view.GeoSMSInformationPanel;
-import com.sahana.geosmser.view.SMSDeliveryView;
+import com.sahana.geosmser.view.SMSDeliveryDialog;
 import com.sahana.geosmser.view.SMSQueryView;
-import com.sahana.geosmser.view.SMSDeliveryView.HanMessageSentDialogPack;
+import com.sahana.geosmser.view.SMSDeliveryDialog.HanMessageSentDialogPack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -56,6 +56,9 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -106,7 +109,7 @@ public class WhereToMeet extends MapActivity {
 	private GeoSMSServiceController geosmsServiceController;
 	
 	private LayoutInflater layoutInflaterFactory;
-	private SMSDeliveryView mSMSDeliveryView;
+	private SMSDeliveryDialog mSMSDeliveryView;
 	private GeoSMSPack curSelectedGeoSMSPackForSMSDelivery;
 	
 	private SMSQueryView mSMSQueryView;
@@ -299,13 +302,9 @@ public class WhereToMeet extends MapActivity {
 	protected Dialog onCreateDialog(int id) {
 		switch(id) {
 			case DIALOG_SMS_DELIVERY:
-				//LayoutInflater factory = LayoutInflater.from(this);
-	            //final View textEntryView = factory.inflate(R.layout.sms_delivery_view, null);
-				return new AlertDialog.Builder(me)
-				.setTitle(R.string.dialog_geosms_delivery_title)
-				.setView(mSMSDeliveryView)
-				.setOnKeyListener(new DialogEvtDisableSMSDeliveryDialogKeyBackOnKeyListener())
-				.create();
+				 SMSDelivery sDelivery = (SMSDelivery) new FragmentActivity();
+				 sDelivery.showDialog();
+				 break;
 			case DIALOG_SMS_DELIVERY_MESSAGESENDING:
 			case DIALOG_SMS_QUERY_MESSAGESENDING:
 				pdSMSDVMessageSending = new ProgressDialog(me);
@@ -445,7 +444,7 @@ public class WhereToMeet extends MapActivity {
 		geosmsServiceController = new GeoSMSServiceController();
 		
 		layoutInflaterFactory = LayoutInflater.from(this);
-		mSMSDeliveryView = (SMSDeliveryView) layoutInflaterFactory.inflate(R.layout.sms_delivery_view, null);
+		mSMSDeliveryView = new SMSDeliveryDialog(getApplicationContext());
 		
 		evtDialogDisableKeyBack = new DialogEvtDisableKeyBackOnKeyListener();
 		hanMessageSentDialogPack = new HanMessageSentDialogPack();
@@ -465,9 +464,11 @@ public class WhereToMeet extends MapActivity {
 		fingerLocationController.bindMapView(mainMap);
 		
 		mSMSDeliveryView.registerSMSSendDeliveryReceiver();
-		mSMSDeliveryView.setOnSourceBindingListener(new SMSDVEvtOnSourceBindingListene());
-		mSMSDeliveryView.setMessageSentHandler(mHanSMSDeliveryDialog);
-		
+		/* not needed now as sent through SMSDeliveryDialog Constructor
+        mSMSDeliveryView.setOnSourceBindingListener(new SMSDVEvtOnSourceBindingListene());
+        mSMSDeliveryView.setMessageSentHandler(mHanSMSDeliveryDialog);
+        */
+        		
 		mSMSQueryView.setMessageSentHandler(mHanSMSQueryDialog);
 		mSMSQueryView.smsWriter.open();
 	}
@@ -1123,7 +1124,7 @@ public class WhereToMeet extends MapActivity {
 	}
 	
 	
-	private class SMSDVEvtOnSourceBindingListene implements SMSDeliveryView.ISMSDeliveryRenderer.OnSourceBindingListener {
+	private class SMSDVEvtOnSourceBindingListene implements SMSDeliveryDialog.ISMSDeliveryRenderer.OnSourceBindingListener {
 		@Override
 		public void onSourceBind(GeoSMSPack pack) {
 			GeoSMSPack p = getCurrentSelectedGeoSMSPackForSMSDelivery();
@@ -1139,7 +1140,7 @@ public class WhereToMeet extends MapActivity {
 				me.dismissDialog(DIALOG_SMS_DELIVERY);
 				if(!mSMSDeliveryView.getMessageFieldText().trim().equals("")
 				        || !mSMSDeliveryView.getPhoneFieldText().trim().equals("")
-				        || !mSMSDeliveryView.getReverseCodeFieldText().trim().equals("")
+				      //  || !mSMSDeliveryView.getReverseCodeFieldText().trim().equals("")
 				) {
 					me.showDialog(DIALOG_SMS_DELIVERY_EXIT_SMS_CONFORM);
 				}
@@ -1308,6 +1309,24 @@ public class WhereToMeet extends MapActivity {
 		public int describeContents() {
 			return 0;
 		}
+	}
+	
+	/*
+	 * Cannot instantiate fragment inside MapActivty so created external
+	 * class extending Fragment and open the SMSDeliveryDialog from there 
+	 */
+	
+	private class SMSDelivery extends FragmentActivity{
+		
+			public void showDialog(){
+				/*
+				 * mHanSMSDelivery and SMSDVEvtOnSourceBindingListene are initialized 
+            	 * when an SMSDeliveryDialog is launched or opened
+            	 */
+            	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            	DialogFragment dialogFragment = new SMSDeliveryDialog(getApplicationContext(),new SMSDVEvtOnSourceBindingListene(),mHanSMSDeliveryDialog);
+            	dialogFragment.show(ft, "openDialog");
+			}
 	}
 
 }

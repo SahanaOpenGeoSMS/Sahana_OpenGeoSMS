@@ -29,6 +29,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.telephony.SmsManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -52,9 +55,9 @@ import com.sahana.geosmser.GeoSMSService.IGeoSMSService;
 import com.sahana.geosmser.gps.MyLocation;
 import com.sahana.geosmser.gps.MyLocation.ProvideType;
 import com.sahana.geosmser.view.*;
-import com.sahana.geosmser.view.SMSDeliveryView.HanMessageSentDialogPack;
+import com.sahana.geosmser.view.SMSDeliveryDialog.HanMessageSentDialogPack;
 
-public class TeamCommunication extends Activity{
+public class TeamCommunication extends FragmentActivity{
     
     private static final int DIALOG_REVERSE_GEOCODER = 100;
  
@@ -66,7 +69,7 @@ public class TeamCommunication extends Activity{
     private TextView mTextWhereAreWeTitle, mTextWhereAmITitle, mTextWhereAreYouTitle;
     private LinearLayout mLayoutWhereAreWe, mLayoutWhereAmI, mLayoutWhereAreYou;
     
-    private SMSDeliveryView mSMSDeliveryView;
+    private SMSDeliveryDialog mSMSDeliveryView;
     private SMSQueryView mSMSQueryView;
     
     private HanMessageSentDialogPack hanMessageSentDialogPack;
@@ -175,19 +178,22 @@ public class TeamCommunication extends Activity{
         
         mReverseGeocoderView = new ReverseGeocoderView(this);
         
-        mSMSDeliveryView = (SMSDeliveryView) layoutInflaterFactory.inflate(R.layout.sms_delivery_view, null);
+        mSMSDeliveryView = new SMSDeliveryDialog(getApplicationContext());
         evtDialogDisableKeyBack = new DialogEvtDisableKeyBackOnKeyListener();
         hanMessageSentDialogPack = new HanMessageSentDialogPack();
         mHanSMSDeliveryDialog = new HanSMSDeliveryDialog();
         mSMSDeliveryView.registerSMSSendDeliveryReceiver();
+        
+        /* not needed now as sent through SMSDeliveryDialog Constructor
         mSMSDeliveryView.setOnSourceBindingListener(new SMSDVEvtOnSourceBindingListene());
         mSMSDeliveryView.setMessageSentHandler(mHanSMSDeliveryDialog);
+        */
         
         mSMSQueryView.setMessageSentHandler(mHanSMSQueryDialog);
         mSMSQueryView.smsWriter.open();
     }
     
-    private class SMSDVEvtOnSourceBindingListene implements SMSDeliveryView.ISMSDeliveryRenderer.OnSourceBindingListener {
+    private class SMSDVEvtOnSourceBindingListene implements SMSDeliveryDialog.ISMSDeliveryRenderer.OnSourceBindingListener {
         @Override
         public void onSourceBind(GeoSMSPack pack) {
             GeoSMSPack p = getCurrentSelectedGeoSMSPackForSMSDelivery();
@@ -255,13 +261,14 @@ public class TeamCommunication extends Activity{
                 return mReverseGeocoder;
                 
             case WhereToMeet.DIALOG_SMS_DELIVERY:
-                //LayoutInflater factory = LayoutInflater.from(this);
-                //final View textEntryView = factory.inflate(R.layout.sms_delivery_view, null);
-                return new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_geosms_mylocation_delivery_title)
-                .setView(mSMSDeliveryView)
-                .setOnKeyListener(new DialogEvtDisableSMSDeliveryDialogKeyBackOnKeyListener())
-                .create();
+            	/*
+            	 * mHanSMSDelivery and SMSDVEvtOnSourceBindingListene are initialized 
+            	 * when an SMSDeliveryDialog is launched or opened
+            	 */
+            	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            	DialogFragment dialogFragment = new SMSDeliveryDialog(getApplicationContext(),new SMSDVEvtOnSourceBindingListene(),mHanSMSDeliveryDialog);
+            	dialogFragment.show(ft, "openDialog");
+            	break;
             case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENDING:
                 
             case WhereToMeet.DIALOG_SMS_DELIVERY_MESSAGESENT:

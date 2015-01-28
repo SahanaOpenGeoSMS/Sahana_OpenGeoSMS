@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+            android:id="@+id/RelativeLayout01" 
+            android:layout_width="wrap_content" 
+            android:layout_height="70sp" >
+            
+        <com.sahana.geosmser.widget.AutoCompleteSMSTextView 
+             android:id="@+id/AutoEditTextSMSPhoneNumber" 
+             android:maxLines="1"              
+             android:singleLine="true" 
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:hint="@string/geosms_delivery_message_receiver_hint" />
+        <Button android:id="@+id/contact"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:text="Contact"
+                android:layout_alignRight="@+id/AutoEditTextSMSPhoneNumber" 
+                android:gravity="center"  
+                />
+        </RelativeLayout>
+        
+        <TableLayout android:id="@+id/TableLayout01" 
+                     android:layout_width="wrap_content" 
+                     android:layout_height="wrap_content" 
+                     android:layout_below="@+id/RelativeLayout01"
+                     android:shrinkColumns="0" 
+                     android:stretchColumns="0">
+			<TableRow android:id="@+id/TableRow01" 
+			          android:layout_width="wrap_content" 
+			          android:layout_height="wrap_content" 
+			          android:gravity="center_vertical">
+				<RelativeLayout android:id="@+id/RelativeLayout02" 
+				                android:background="@android:drawable/edit_text" 
+				                android:layout_height="wrap_content" 
+				                android:layout_weight="1.0" 
+				                android:addStatesFromChildren="true" 
+				                android:layout_width="0dip">
+		
+					<EditText 
+					    android:maxLines="4" 
+					    android:inputType="textMultiLine" 
+					    android:id="@+id/EditTextSMSMessage" 
+					    android:autoText="true" 
+					    android:capitalize="sentences" 
+					    android:background="@null" 
+					    android:layout_width="fill_parent" 
+					    android:layout_height="wrap_content" 
+					    android:hint="@string/geosms_delivery_message_body_hint" 
+					    android:minLines="2" 
+					    android:textColor="#000000"
+					    android:gravity="top"></EditText>
+					<TextView
+                            android:id="@+id/TextViewSMSMessageCounter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#88000000"
+                            android:textColor="#ffffffff"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:paddingLeft="3dip"
+                            android:paddingRight="3dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true" android:visibility="gone"/>
+				</RelativeLayout>
+				<Button android:layout_width="wrap_content" 
+				        android:text="@string/geosms_delivery_message_send_button" 
+				        android:id="@+id/ButtonSMSSend" 
+				        android:layout_height="fill_parent" 
+				        android:layout_gravity="top"></Button>
+				</TableRow>
+				</TableLayout>
+			
+    </RelativeLayout>
+    

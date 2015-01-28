@@ -25,7 +25,7 @@ import com.sahana.geosmser.R;
 import com.sahana.geosmser.GeoSMSPack;
 import com.sahana.geosmser.GeoSMSPackFactory;
 import com.sahana.geosmser.WhereToMeet;
-import com.sahana.geosmser.view.SMSDeliveryView.ISMSDeliveryRenderer;
+import com.sahana.geosmser.view.SMSDeliveryDialog.ISMSDeliveryRenderer;
 import com.sahana.geosmser.widget.AutoCompleteSMSTextView;
 
 import android.content.Context;
